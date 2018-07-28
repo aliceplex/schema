@@ -3,89 +3,92 @@ pylint:
   stage: test
 
   before_script:
-    - python -V
-    - pip install -r requirements.txt
-    - pip install pylint==2.0.1
-    - pylint --version
+  - python -V
+  - pip install -r requirements.txt
+  - pip install pylint==2.0.1
+  - pylint --version
 
   script:
-    - pylint plex_schema
+  - pylint plex_schema
 
 pytest:
   image: python:3.7
   stage: test
 
   before_script:
-    - python -V
-    - pip install -r requirements.txt
-    - pip install pytest==3.6.3
-    - pip install pytest-cov==2.5.1
-    - pytest --version
+  - python -V
+  - pip install -r requirements.txt
+  - pip install pytest==3.6.3
+  - pip install pytest-cov==2.5.1
+  - pytest --version
 
   script:
-    - py.test --cov=plex_schema tests
+  - py.test --cov=plex_schema tests
 
 mypy:
   image: python:3.7
   stage: test
 
   before_script:
-    - python -V
-    - pip install -r requirements.txt
-    - pip install mypy==0.620
-    - mypy --version
+  - python -V
+  - pip install -r requirements.txt
+  - pip install mypy==0.620
+  - mypy --version
 
   script:
-    - mypy --ignore-missing-imports plex_schema
+  - mypy --ignore-missing-imports plex_schema
 
 flake8:
   image: python:3.7
   stage: test
 
   before_script:
-    - python -V
-    - pip install -r requirements.txt
-    - pip install flake8==3.5.0
-    - flake8 --version
+  - python -V
+  - pip install -r requirements.txt
+  - pip install flake8==3.5.0
+  - flake8 --version
 
   script:
-    - flake8 plex_schema
+  - flake8 plex_schema
 
 pages:
   image: python:3.7
   stage: deploy
 
   before_script:
-    - python -V
-    - pip install -r requirements.txt
-    - pip install -r requirements.docs.txt
+  - python -V
+  - pip install -r requirements.txt
+  - pip install -r requirements.docs.txt
 
   script:
-    - cd docs
-    - make html
-    - mv _build/html ../public
+  - cd docs
+  - make html
+  - mv _build/html ../public
 
   artifacts:
     paths:
-      - public
+    - public
     expire_in: 1h
+
+  only:
+  - master
 
 wheel:
   image: python:3.7
   stage: deploy
 
   before_script:
-    - python -V
-    - pip install -r requirements.txt
-    - pip install -U setuptools wheel
+  - python -V
+  - pip install -r requirements.txt
+  - pip install -U setuptools wheel
 
   script:
-    - python setup.py sdist bdist_wheel
+  - python setup.py sdist bdist_wheel
 
   artifacts:
     paths:
-      - dist
+    - dist
     expire_in: 1w
 
   only:
-    - master
+  - tags
