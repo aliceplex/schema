@@ -1,0 +1,73 @@
+pylint:
+  image: python:3.7
+  stage: test
+
+  before_script:
+    - python -V
+    - pip install -r requirements.txt
+    - pip install pylint==2.0.1
+    - pylint --version
+
+  script:
+    - pylint plex_schema
+
+pytest:
+  image: python:3.7
+  stage: test
+
+  before_script:
+    - python -V
+    - pip install -r requirements.txt
+    - pip install pytest==2.0.1
+    - pip install pytest-cov==2.5.1
+    - pytest --version
+
+  script:
+    - py.test --cov=plex_schema tests
+
+mypy:
+  image: python:3.7
+  stage: test
+
+  before_script:
+    - python -V
+    - pip install -r requirements.txt
+    - pip install mypy==0.620
+    - mypy --version
+
+  script:
+    - mypy --ignore-missing-imports plex_schema
+
+flake8:
+  image: python:3.7
+  stage: test
+
+  before_script:
+    - python -V
+    - pip install -r requirements.txt
+    - pip install flake8==3.5.0
+    - flake8 --version
+
+  script:
+    - flake8 plex_schema
+
+pages:
+  image: python:3.7
+  stage: deploy
+
+  before_script:
+    - python -V
+    - pip install -r requirements.txt
+    - pip install -r requirements.docs.txt
+
+  script:
+    - cd docs
+    - make html
+    - mv _build/html ../public
+
+  artifacts:
+    paths:
+      - public
+
+  only:
+    - master

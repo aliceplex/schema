@@ -1,0 +1,5 @@
+pytest==3.6.3
+pylint==2.0.1
+mypy==0.620
+flake8==3.5.0
+pytest-cov==2.5.1
