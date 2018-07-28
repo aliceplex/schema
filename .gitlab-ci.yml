@@ -77,7 +77,7 @@ wheel:
   before_script:
     - python -V
     - pip install -r requirements.txt
-    - pip install --U setuptools wheel
+    - pip install -U setuptools wheel
 
   script:
     - python setup.py sdist bdist_wheel
