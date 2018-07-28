@@ -18,7 +18,7 @@ pytest:
   before_script:
     - python -V
     - pip install -r requirements.txt
-    - pip install -i https://pypi.python.org/simple pytest==2.0.1
+    - pip install pytest==3.6.3
     - pip install pytest-cov==2.5.1
     - pytest --version
 
