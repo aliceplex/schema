@@ -101,7 +101,8 @@ wheel:
     expire_in: 1d
 
   only:
-    - tags
+    refs:
+      - tags
     variables:
       - $PYPI_USER
       - $PYPI_TOKEN
