@@ -11,9 +11,9 @@ copyright = "2018, Alice"
 author = "Alice"
 
 # The short X.Y version
-version = "1.0.2"
+version = "1.0.3"
 # The full version, including alpha/beta/rc tags
-release = "1.0.2"
+release = "1.0.3"
 
 # -- General configuration ---------------------------------------------------
 
@@ -142,3 +142,6 @@ texinfo_documents = [
 # -- Extension configuration -------------------------------------------------
 
 add_module_names = False
+scv_banner_greatest_tag = True
+scv_show_banner = True
+scv_banner_main_ref = "master"
