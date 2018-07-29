@@ -142,6 +142,5 @@ texinfo_documents = [
 # -- Extension configuration -------------------------------------------------
 
 add_module_names = False
-scv_banner_greatest_tag = True
 scv_show_banner = True
 scv_banner_main_ref = "master"
