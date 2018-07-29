@@ -89,10 +89,11 @@ wheel:
   before_script:
     - python -V
     - pip install -r requirements.txt
-    - pip install -U setuptools wheel
+    - pip install -U setuptools wheel twine
 
   script:
     - python setup.py sdist bdist_wheel
+    - twine upload --repository-url https://pypi.joshuaavalon.io -u $PYPI_USER -p $PYPI_TOKEN dist/*
 
   artifacts:
     paths:
@@ -101,3 +102,6 @@ wheel:
 
   only:
     - tags
+    variables:
+      - $PYPI_USER
+      - $PYPI_TOKEN
