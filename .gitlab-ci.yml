@@ -93,7 +93,7 @@ wheel:
 
   script:
     - python setup.py sdist bdist_wheel
-    - twine upload --repository-url https://pypi.joshuaavalon.io -u $PYPI_USER -p $PYPI_TOKEN dist/*
+    - twine upload --repository-url https://pypi.joshuaavalon.io -u "$PYPI_USER" -p "$PYPI_TOKEN" dist/*
 
   artifacts:
     paths:
