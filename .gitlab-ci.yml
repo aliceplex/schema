@@ -61,9 +61,8 @@ pages:
   - pip install -r requirements.docs.txt
 
   script:
-  - cd docs
-  - make html
-  - mv _build/html ../public
+  - sphinx-versioning build -r master docs docs/_build/html
+  - mv docs/_build/html public
 
   artifacts:
     paths:
@@ -71,6 +70,7 @@ pages:
     expire_in: 1h
 
   only:
+  - tags
   - master
 
 wheel:
