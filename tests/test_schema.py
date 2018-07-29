@@ -4,12 +4,18 @@ from marshmallow import ValidationError
 from pytest import raises
 
 from plex_schema.model import Actor, Episode, Movie, Show
-from plex_schema.schema import ActorSchema, EpisodeSchema, MovieSchema, ShowSchema
+from plex_schema.schema import ActorSchema, ActorStrictSchema, EpisodeSchema, EpisodeStrictSchema, MovieSchema, \
+    MovieStrictSchema, ShowSchema, ShowStrictSchema
 
 actor_schema = ActorSchema()
 show_schema = ShowSchema()
 movie_schema = MovieSchema()
 episode_schema = EpisodeSchema()
+
+actor_strict_schema = ActorStrictSchema()
+show_strict_schema = ShowStrictSchema()
+movie_strict_schema = MovieStrictSchema()
+episode_strict_schema = EpisodeStrictSchema()
 
 date = datetime(2018, 1, 2).date()
 date_str = "2018-01-02"
@@ -283,3 +289,35 @@ def test_movie_schema_load_error():
             "collections": [2],
             "actors": [None]
         })
+
+
+def test_actor_strict_schema():
+    with raises(ValidationError):
+        actor_strict_schema.load({})
+    actor = Actor()
+    with raises(ValidationError):
+        actor_strict_schema.load(actor)
+
+
+def test_show_strict_schema():
+    with raises(ValidationError):
+        show_strict_schema.load({})
+    show = Show()
+    with raises(ValidationError):
+        show_strict_schema.load(show)
+
+
+def test_episode_strict_schema():
+    with raises(ValidationError):
+        episode_strict_schema.load({})
+    episode = Episode()
+    with raises(ValidationError):
+        episode_strict_schema.load(episode)
+
+
+def test_movie_strict_schema():
+    with raises(ValidationError):
+        movie_strict_schema.load({})
+    movie = Movie()
+    with raises(ValidationError):
+        movie_strict_schema.load(movie)
