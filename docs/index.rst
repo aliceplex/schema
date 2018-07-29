@@ -1,10 +1,7 @@
-.. plex-schema documentation master file, created by
-   sphinx-quickstart on Fri Jul 27 00:56:59 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to plex-schema's documentation!
 =======================================
+
+plex-schema is schema library for Plex.
 
 .. toctree::
    :maxdepth: 2

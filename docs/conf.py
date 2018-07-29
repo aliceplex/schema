@@ -7,8 +7,8 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "plex-schema"
-copyright = "2018, Joshua Avalon"
-author = "Joshua Avalon"
+copyright = "2018, Alice"
+author = "Alice"
 
 # The short X.Y version
 version = "1.0.2"
