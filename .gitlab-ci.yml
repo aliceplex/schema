@@ -4,7 +4,6 @@ pylint:
 
   before_script:
     - python -V
-    - pip install -r requirements.txt
     - pip install pylint==2.0.1
     - pylint --version
 
@@ -49,7 +48,6 @@ flake8:
 
   before_script:
     - python -V
-    - pip install -r requirements.txt
     - pip install flake8==3.5.0
     - flake8 --version
 
@@ -65,7 +63,6 @@ pages:
 
   before_script:
     - python -V
-    - pip install -r requirements.txt
     - pip install -r requirements.docs.txt
 
   script:
@@ -88,17 +85,32 @@ wheel:
 
   before_script:
     - python -V
-    - pip install -r requirements.txt
-    - pip install -U setuptools wheel twine
+    - pip install -U setuptools wheel
 
   script:
     - python setup.py sdist bdist_wheel
-    - twine upload --repository-url https://pypi.joshuaavalon.io -u "$PYPI_USER" -p "$PYPI_TOKEN" dist/*
 
   artifacts:
     paths:
       - dist
     expire_in: 1d
+
+  only:
+    - tags
+
+wheel:deploy:
+  image: python:3.7
+  stage: deploy
+
+  dependencies:
+    - wheel
+
+  before_script:
+    - python -V
+    - pip install twine
+
+  script:
+    - twine upload --repository-url https://pypi.joshuaavalon.io -u $PYPI_USER -p $PYPI_TOKEN dist/*
 
   only:
     refs:
