@@ -1,3 +1,10 @@
+stages:
+  - build
+  - test
+  - post-test
+  - deploy
+  - pages
+
 pylint:
   image: python:3.7
   stage: test
@@ -54,34 +61,9 @@ flake8:
   script:
     - flake8 plex_schema
 
-pages:
-  image: python:3.7
-  stage: deploy
-
-  dependencies:
-    - pytest
-
-  before_script:
-    - python -V
-    - pip install -r requirements.docs.txt
-
-  script:
-    - sphinx-versioning build -r master docs docs/_build/html
-    - mv docs/_build/html public
-    - mv htmlcov public/htmlcov
-
-  artifacts:
-    paths:
-      - public
-    expire_in: 1h
-
-  only:
-    - tags
-    - master
-
 wheel:
   image: python:3.7
-  stage: deploy
+  stage: post-test
 
   before_script:
     - python -V
@@ -118,3 +100,28 @@ wheel:deploy:
     variables:
       - $PYPI_USER
       - $PYPI_TOKEN
+
+pages:
+  image: python:3.7
+  stage: pages
+
+  dependencies:
+    - pytest
+
+  before_script:
+    - python -V
+    - pip install -r requirements.docs.txt
+
+  script:
+    - sphinx-versioning build -r master docs docs/_build/html
+    - mv docs/_build/html public
+    - mv htmlcov public/htmlcov
+
+  artifacts:
+    paths:
+      - public
+    expire_in: 1h
+
+  only:
+    - tags
+    - master
