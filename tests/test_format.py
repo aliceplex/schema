@@ -45,6 +45,11 @@ def test_replace_ending_space():
     assert format.replace_ending_space("test?  test! ") == "test?test!"
 
 
+def test_remove_single_linebreak():
+    expected = "Hello\n\nWorld?Test"
+    assert format.remove_single_linebreak("Hello\n\nWorld?\nTest") == expected
+
+
 def test_normalize():
     assert format.normalize("。 \n! ") == "。\n!"
     assert format.normalize("test.....") == "test……"

@@ -168,6 +168,25 @@ def replace_ending_space(string: str) -> str:
     return re.sub(r"([?!。])[^\S\n]+", r"\g<1>", string)
 
 
+def remove_single_linebreak(string: str) -> str:
+    """
+    Remove single linebreak.
+
+    :param string: String to be processed
+    :type string: str
+    :return: Result string
+    :rtype: str
+
+    **Example:**
+
+    .. code-block:: python
+
+        string = "Hello\n\nWorld?\nTest"
+        result = replace_ending_space(string) # "Hello\n\nWorld?Test"
+    """
+    return re.sub(r"(?<!\n)\n(?!\n)", "", string)
+
+
 def normalize(string: str) -> str:
     """
     Run ``unicodedata.normalize`` with ``NFKC`` and all other formatting.
@@ -181,8 +200,9 @@ def normalize(string: str) -> str:
     result = remove_trailing_space(result)
     result = replace_continuous_newlines(result)
     result = replace_continuous_space(result)
+    result = replace_ending_space(result)
+    result = remove_single_linebreak(result)
     result = replace_tilde(result)
     result = replace_dot(result)
-    result = replace_ending_space(result)
     result = replace_arrow_brackets(result)
     return result
