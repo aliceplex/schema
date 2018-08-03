@@ -51,6 +51,6 @@ def test_remove_single_linebreak():
 
 
 def test_normalize():
-    assert format.normalize("。 \n! ") == "。\n!"
+    assert format.normalize("。 \n! ") == "。!"
     assert format.normalize("test.....") == "test……"
     assert format.normalize("Hello     World!") == "Hello World!"
