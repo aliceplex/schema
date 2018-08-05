@@ -35,19 +35,6 @@ pytest:
       - htmlcov
     expire_in: 1h
 
-mypy:
-  image: python:3.7
-  stage: test
-
-  before_script:
-    - python -V
-    - pip install -r requirements.txt
-    - pip install mypy==0.620
-    - mypy --version
-
-  script:
-    - mypy --ignore-missing-imports plex_schema
-
 flake8:
   image: python:3.7
   stage: test
