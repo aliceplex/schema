@@ -163,7 +163,7 @@ class ShowStrictSchema(ShowSchema):
     sort_title = fields.Str(allow_none=False, required=True)
     original_title = fields.Str(allow_none=False, required=True)
     content_rating = fields.Str(allow_none=False, required=True)
-    tagline = fields.Str()
+    tagline = fields.Str(allow_none=False)
     studio = fields.Str(allow_none=False, required=True)
     aired = fields.Date(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
@@ -189,7 +189,7 @@ class EpisodeStrictSchema(EpisodeSchema):
     episode = fields.Int(validate=Range(min=1),
                          allow_none=False,
                          required=True)
-    aired = fields.Date()
+    aired = fields.Date(allow_none=True)
     content_rating = fields.Str(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     directors = fields.List(fields.Str(allow_none=False),
@@ -212,7 +212,7 @@ class MovieStrictSchema(MovieSchema):
     sort_title = fields.Str(allow_none=False, required=True)
     original_title = fields.Str(allow_none=False, required=True)
     content_rating = fields.Str(allow_none=False, required=True)
-    tagline = fields.Str()
+    tagline = fields.Str(allow_none=True)
     studio = fields.Str(allow_none=False, required=True)
     aired = fields.Date(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)

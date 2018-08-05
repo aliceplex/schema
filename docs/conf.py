@@ -116,7 +116,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, "plex-schema.tex", "plex-schema Documentation",
-     "Joshua Avalon", "manual"),
+     author, "manual"),
 ]
 
 # -- Options for manual page output ------------------------------------------
