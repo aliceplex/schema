@@ -7,6 +7,7 @@ plex-schema is schema library for Plex.
    :maxdepth: 2
    :caption: Table of Contents:
 
+   usage.rst
    module/modules.rst
 
 
