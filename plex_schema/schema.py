@@ -163,7 +163,7 @@ class ShowStrictSchema(ShowSchema):
     sort_title = fields.Str(allow_none=False, required=True)
     original_title = fields.Str(allow_none=False, required=True)
     content_rating = fields.Str(allow_none=False, required=True)
-    tagline = fields.Str(allow_none=False)
+    tagline = fields.Str(allow_none=True)
     studio = fields.Str(allow_none=False, required=True)
     aired = fields.Date(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
