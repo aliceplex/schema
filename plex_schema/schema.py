@@ -9,7 +9,8 @@ from typing import Any, Dict
 from marshmallow import Schema, fields, post_load, pre_dump, pre_load
 from marshmallow.validate import Length, Range
 
-from plex_schema.model import Actor, Episode, Movie, Show
+from .model import Actor, Episode, Movie, Show
+from .patch import PatchDateField
 
 __all__ = ["ActorSchema", "ShowSchema", "EpisodeSchema", "MovieSchema",
            "ActorStrictSchema", "EpisodeStrictSchema", "MovieStrictSchema",
@@ -86,7 +87,7 @@ class ShowSchema(DataClassSchema):
     content_rating = fields.Str()
     tagline = fields.Str()
     studio = fields.Str()
-    aired = fields.Date()
+    aired = PatchDateField()
     summary = fields.Str()
     rating = fields.Float(allow_none=True)
     genres = fields.List(fields.Str(allow_none=False), allow_none=False)
@@ -106,7 +107,7 @@ class EpisodeSchema(DataClassSchema):
 
     title = fields.Str()
     episode = fields.Int()
-    aired = fields.Date()
+    aired = PatchDateField()
     content_rating = fields.Str()
     summary = fields.Str()
     directors = fields.List(fields.Str(allow_none=False), allow_none=False)
@@ -129,7 +130,7 @@ class MovieSchema(DataClassSchema):
     content_rating = fields.Str()
     tagline = fields.Str()
     studio = fields.Str()
-    aired = fields.Date()
+    aired = PatchDateField()
     summary = fields.Str()
     rating = fields.Float(allow_none=True)
     genres = fields.List(fields.Str(allow_none=False), allow_none=False)
@@ -165,7 +166,7 @@ class ShowStrictSchema(ShowSchema):
     content_rating = fields.Str(allow_none=False, required=True)
     tagline = fields.Str(allow_none=True)
     studio = fields.Str(allow_none=False, required=True)
-    aired = fields.Date(allow_none=False, required=True)
+    aired = PatchDateField(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     rating = fields.Float(validate=Range(min=0, max=10), allow_none=True)
     genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1),
@@ -189,7 +190,7 @@ class EpisodeStrictSchema(EpisodeSchema):
     episode = fields.Int(validate=Range(min=1),
                          allow_none=False,
                          required=True)
-    aired = fields.Date(allow_none=True)
+    aired = PatchDateField(allow_none=True)
     content_rating = fields.Str(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     directors = fields.List(fields.Str(allow_none=False),
@@ -214,7 +215,7 @@ class MovieStrictSchema(MovieSchema):
     content_rating = fields.Str(allow_none=False, required=True)
     tagline = fields.Str(allow_none=True)
     studio = fields.Str(allow_none=False, required=True)
-    aired = fields.Date(allow_none=False, required=True)
+    aired = PatchDateField(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     rating = fields.Float(validate=Range(min=0, max=10))
     genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1))
