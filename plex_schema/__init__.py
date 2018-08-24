@@ -1,3 +1,7 @@
+"""
+Provides models and schemas for Plex library
+"""
+
 from .model import Actor, Episode, Movie, Show
 from .schema import ActorSchema, ActorStrictSchema, EpisodeSchema, \
     EpisodeStrictSchema, MovieSchema, MovieStrictSchema, \
