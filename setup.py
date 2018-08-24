@@ -4,7 +4,7 @@ with open("README.md", "r") as readme:
     long_description = readme.read()
 
 setup(name="plex_schema",
-      version="1.0.6",
+      version="1.0.7",
       author="Alice",
       url="https://git.joshuaavalon.io/alice/plex-schema",
       description="Schema library for Plex",
