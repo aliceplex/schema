@@ -9,12 +9,13 @@ from typing import Any, Dict
 from marshmallow import Schema, fields, post_load, pre_dump, pre_load
 from marshmallow.validate import Length, Range
 
-from .model import Actor, Episode, Movie, Show
+from .model import Actor, Album, Artist, Episode, Movie, Show
 from .patch import PatchDateField
 
 __all__ = ["ActorSchema", "ShowSchema", "EpisodeSchema", "MovieSchema",
            "ActorStrictSchema", "EpisodeStrictSchema", "MovieStrictSchema",
-           "ShowStrictSchema"]
+           "ShowStrictSchema", "ArtistSchema", "ArtistStrictSchema",
+           "AlbumSchema", "AlbumStrictSchema"]
 
 
 class DataClassSchema(Schema):
@@ -145,6 +146,38 @@ class MovieSchema(DataClassSchema):
         return Movie
 
 
+class ArtistSchema(DataClassSchema):
+    """
+    Schema for :class:`plex_schema.model.Artist`
+    """
+
+    name = fields.Str()
+    summary = fields.Str()
+    similar = fields.List(fields.Str(allow_none=False), allow_none=False)
+    genres = fields.List(fields.Str(allow_none=False), allow_none=False)
+    collections = fields.List(fields.Str(allow_none=False), allow_none=False)
+
+    @property
+    def data_class(self) -> type:
+        return Artist
+
+
+class AlbumSchema(DataClassSchema):
+    """
+    Schema for :class:`plex_schema.model.Album`
+    """
+
+    name = fields.Str()
+    summary = fields.Str()
+    aired = PatchDateField()
+    genres = fields.List(fields.Str(allow_none=False), allow_none=False)
+    collections = fields.List(fields.Str(allow_none=False), allow_none=False)
+
+    @property
+    def data_class(self) -> type:
+        return Album
+
+
 class ActorStrictSchema(ActorSchema):
     """
     Strict schema for :class:`plex_schema.model.Actor`
@@ -235,3 +268,33 @@ class MovieStrictSchema(MovieSchema):
                             validate=Length(min=1),
                             allow_none=False,
                             required=True)
+
+
+class ArtistStrictSchema(ArtistSchema):
+    """
+    Strict schema for :class:`plex_schema.model.Artist`
+    """
+
+    name = fields.Str(allow_none=False, required=True)
+    summary = fields.Str(allow_none=False, required=True)
+    similar = fields.List(fields.Str(allow_none=False), allow_none=False)
+    genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1))
+    collections = fields.List(fields.Str(allow_none=False),
+                              validate=Length(min=1),
+                              allow_none=False,
+                              required=True)
+
+
+class AlbumStrictSchema(AlbumSchema):
+    """
+    Strict schema for :class:`plex_schema.model.Album`
+    """
+
+    name = fields.Str(allow_none=False, required=True)
+    summary = fields.Str(allow_none=False, required=True)
+    aired = PatchDateField(allow_none=False, required=True)
+    genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1))
+    collections = fields.List(fields.Str(allow_none=False),
+                              validate=Length(min=1),
+                              allow_none=False,
+                              required=True)

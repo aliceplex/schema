@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import List, Optional
 
-__all__ = ["Actor", "Show", "Episode", "Movie"]
+__all__ = ["Actor", "Show", "Episode", "Movie", "Album", "Artist"]
 
 
 @dataclass
@@ -72,3 +72,27 @@ class Movie:
     actors: List[Actor] = field(default_factory=list)
     writers: List[str] = field(default_factory=list)
     directors: List[str] = field(default_factory=list)
+
+
+@dataclass
+class Artist:
+    """
+    Represent an artist of an album.
+    """
+    name: Optional[str] = None
+    collections: List[str] = field(default_factory=list)
+    genres: List[str] = field(default_factory=list)
+    summary: Optional[str] = None
+    similar: List[str] = field(default_factory=list)
+
+
+@dataclass
+class Album:
+    """
+    Represent an album.
+    """
+    name: Optional[str] = None
+    aired: Optional[date] = None
+    collections: List[str] = field(default_factory=list)
+    genres: List[str] = field(default_factory=list)
+    summary: Optional[str] = None
