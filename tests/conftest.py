@@ -77,7 +77,7 @@ def artist() -> Artist:
 
 
 @fixture
-def album() -> Album:
+def album(dummy_date: date) -> Album:
     return Album(
         name="name",
         aired=dummy_date,
