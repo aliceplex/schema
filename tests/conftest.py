@@ -66,7 +66,7 @@ def movie(actor: Actor, dummy_date: date) -> Movie:
 
 
 @fixture
-def artist(actor: Actor, dummy_date: date) -> Artist:
+def artist() -> Artist:
     return Artist(
         name="name",
         summary="summary",
@@ -77,7 +77,7 @@ def artist(actor: Actor, dummy_date: date) -> Artist:
 
 
 @fixture
-def album(actor: Actor, dummy_date: date) -> Album:
+def album() -> Album:
     return Album(
         name="name",
         aired=dummy_date,
