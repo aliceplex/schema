@@ -59,7 +59,7 @@ pages:
     - pip install -r requirements.docs.txt
 
   script:
-    - sphinx build -r master docs docs/_build/html
+    - sphinx-build -r master docs docs/_build/html
     - mv docs/_build/html public
     - mv htmlcov public/htmlcov
 
