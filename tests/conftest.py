@@ -5,7 +5,12 @@ from pytest import fixture
 from plex_schema import Actor, ActorSchema, ActorStrictSchema, Album, \
     AlbumSchema, AlbumStrictSchema, Artist, ArtistSchema, ArtistStrictSchema, \
     Episode, EpisodeSchema, EpisodeStrictSchema, Movie, MovieSchema, \
-    MovieStrictSchema, Show, ShowSchema, ShowStrictSchema
+    MovieStrictSchema, Person, Show, ShowSchema, ShowStrictSchema
+
+
+@fixture
+def person() -> Person:
+    return Person(name="name", photo="photo")
 
 
 @fixture
@@ -20,8 +25,8 @@ def show(actor: Actor, dummy_date: date) -> Show:
         sort_title="sort_title",
         original_title="original_title",
         content_rating="content_rating",
-        tagline="tagline",
-        studio="studio",
+        tagline=["tagline"],
+        studio=["studio"],
         aired=dummy_date,
         summary="summary",
         rating=1,
@@ -32,36 +37,36 @@ def show(actor: Actor, dummy_date: date) -> Show:
 
 
 @fixture
-def episode(dummy_date: date) -> Episode:
+def episode(dummy_date: date, person: Person) -> Episode:
     return Episode(
-        title="title",
+        title=["title"],
         episode=1,
         content_rating="content_rating",
         aired=dummy_date,
         summary="summary",
         rating=1,
-        writers=["writers"],
-        directors=["directors"]
+        writers=[person],
+        directors=[person]
     )
 
 
 @fixture
-def movie(actor: Actor, dummy_date: date) -> Movie:
+def movie(actor: Actor, dummy_date: date, person: Person) -> Movie:
     return Movie(
         title="title",
         sort_title="sort_title",
         original_title="original_title",
         content_rating="content_rating",
-        tagline="tagline",
-        studio="studio",
+        tagline=["tagline"],
+        studio=["studio"],
         aired=dummy_date,
         summary="summary",
         rating=1,
         genres=["genres"],
         collections=["collections"],
         actors=[actor],
-        writers=["writers"],
-        directors=["directors"]
+        writers=[person],
+        directors=[person]
     )
 
 

@@ -6,17 +6,24 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import List, Optional
 
-__all__ = ["Actor", "Show", "Episode", "Movie", "Album", "Artist"]
+__all__ = ["Actor", "Show", "Episode", "Movie", "Album", "Artist", "Person"]
 
 
 @dataclass
-class Actor:
+class Person:
     """
-    Represent an actor of a show or movie.
+    Represent a person.
     """
     name: Optional[str] = None
-    role: Optional[str] = None
     photo: Optional[str] = None
+
+
+@dataclass
+class Actor(Person):
+    """
+    Represent an actor.
+    """
+    role: Optional[str] = None
 
 
 @dataclass
@@ -28,8 +35,8 @@ class Show:
     sort_title: Optional[str] = None
     original_title: Optional[str] = None
     content_rating: Optional[str] = None
-    tagline: Optional[str] = None
-    studio: Optional[str] = None
+    tagline: List[str] = field(default_factory=list)
+    studio: List[str] = field(default_factory=list)
     aired: Optional[date] = None
     summary: Optional[str] = None
     rating: Optional[float] = None
@@ -43,13 +50,13 @@ class Episode:
     """
     Represent an episode.
     """
-    title: Optional[str] = None
+    title: List[str] = field(default_factory=list)
     episode: Optional[int] = None
     aired: Optional[date] = None
     content_rating: Optional[str] = None
     summary: Optional[str] = None
-    directors: List[str] = field(default_factory=list)
-    writers: List[str] = field(default_factory=list)
+    directors: List[Person] = field(default_factory=list)
+    writers: List[Person] = field(default_factory=list)
     rating: Optional[float] = None
 
 
@@ -62,16 +69,16 @@ class Movie:
     sort_title: Optional[str] = None
     original_title: Optional[str] = None
     content_rating: Optional[str] = None
-    tagline: Optional[str] = None
-    studio: Optional[str] = None
+    tagline: List[str] = field(default_factory=list)
+    studio: List[str] = field(default_factory=list)
     aired: Optional[date] = None
     summary: Optional[str] = None
     rating: Optional[float] = None
     genres: List[str] = field(default_factory=list)
     collections: List[str] = field(default_factory=list)
     actors: List[Actor] = field(default_factory=list)
-    writers: List[str] = field(default_factory=list)
-    directors: List[str] = field(default_factory=list)
+    writers: List[Person] = field(default_factory=list)
+    directors: List[Person] = field(default_factory=list)
 
 
 @dataclass

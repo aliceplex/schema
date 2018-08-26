@@ -9,13 +9,14 @@ from typing import Any, Dict
 from marshmallow import Schema, fields, post_load, pre_dump, pre_load
 from marshmallow.validate import Length, Range
 
-from .model import Actor, Album, Artist, Episode, Movie, Show
+from .model import Actor, Album, Artist, Episode, Movie, Person, Show
 from .patch import PatchDateField
 
 __all__ = ["ActorSchema", "ShowSchema", "EpisodeSchema", "MovieSchema",
            "ActorStrictSchema", "EpisodeStrictSchema", "MovieStrictSchema",
            "ShowStrictSchema", "ArtistSchema", "ArtistStrictSchema",
-           "AlbumSchema", "AlbumStrictSchema"]
+           "AlbumSchema", "AlbumStrictSchema", "PersonSchema",
+           "PersonStrictSchema"]
 
 
 class DataClassSchema(Schema):
@@ -63,14 +64,25 @@ class DataClassSchema(Schema):
         raise NotImplementedError()
 
 
-class ActorSchema(DataClassSchema):
+class PersonSchema(DataClassSchema):
+    """
+    Schema for :class:`plex_schema.model.Person`
+    """
+
+    name = fields.Str()
+    photo = fields.Str()
+
+    @property
+    def data_class(self) -> type:
+        return Person
+
+
+class ActorSchema(PersonSchema):
     """
     Schema for :class:`plex_schema.model.Actor`
     """
 
-    name = fields.Str()
     role = fields.Str()
-    photo = fields.Str()
 
     @property
     def data_class(self) -> type:
@@ -86,15 +98,17 @@ class ShowSchema(DataClassSchema):
     sort_title = fields.Str()
     original_title = fields.Str()
     content_rating = fields.Str()
-    tagline = fields.Str()
-    studio = fields.Str()
+    tagline = fields.List(fields.Str(allow_none=False), allow_none=False)
+    studio = fields.List(fields.Str(allow_none=False), allow_none=False)
     aired = PatchDateField()
     summary = fields.Str()
     rating = fields.Float(allow_none=True)
     genres = fields.List(fields.Str(allow_none=False), allow_none=False)
     collections = fields.List(fields.Str(allow_none=False), allow_none=False)
-    actors = fields.List(fields.Nested(ActorSchema, allow_none=False),
-                         allow_none=False)
+    actors = fields.List(
+        fields.Nested(ActorSchema, allow_none=False, only=["name", "role"]),
+        allow_none=False
+    )
 
     @property
     def data_class(self) -> type:
@@ -106,13 +120,19 @@ class EpisodeSchema(DataClassSchema):
     Schema for :class:`plex_schema.model.Episode`
     """
 
-    title = fields.Str()
+    title = fields.List(fields.Str(allow_none=False), allow_none=False)
     episode = fields.Int()
     aired = PatchDateField()
     content_rating = fields.Str()
     summary = fields.Str()
-    directors = fields.List(fields.Str(allow_none=False), allow_none=False)
-    writers = fields.List(fields.Str(allow_none=False), allow_none=False)
+    directors = fields.List(
+        fields.Nested(PersonSchema, allow_none=False, only="name"),
+        allow_none=False
+    )
+    writers = fields.List(
+        fields.Nested(PersonSchema, allow_none=False, only="name"),
+        allow_none=False
+    )
     rating = fields.Float(allow_none=True)
 
     @property
@@ -129,17 +149,25 @@ class MovieSchema(DataClassSchema):
     sort_title = fields.Str()
     original_title = fields.Str()
     content_rating = fields.Str()
-    tagline = fields.Str()
-    studio = fields.Str()
+    tagline = fields.List(fields.Str(allow_none=False), allow_none=False)
+    studio = fields.List(fields.Str(allow_none=False), allow_none=False)
     aired = PatchDateField()
     summary = fields.Str()
     rating = fields.Float(allow_none=True)
     genres = fields.List(fields.Str(allow_none=False), allow_none=False)
     collections = fields.List(fields.Str(allow_none=False), allow_none=False)
-    actors = fields.List(fields.Nested(ActorSchema, allow_none=False),
-                         allow_none=False)
-    writers = fields.List(fields.Str(allow_none=False), allow_none=False)
-    directors = fields.List(fields.Str(allow_none=False), allow_none=False)
+    actors = fields.List(
+        fields.Nested(ActorSchema, allow_none=False, only=["name", "role"]),
+        allow_none=False
+    )
+    writers = fields.List(
+        fields.Nested(PersonSchema, allow_none=False, only="name"),
+        allow_none=False
+    )
+    directors = fields.List(
+        fields.Nested(PersonSchema, allow_none=False, only="name"),
+        allow_none=False
+    )
 
     @property
     def data_class(self) -> type:
@@ -178,14 +206,21 @@ class AlbumSchema(DataClassSchema):
         return Album
 
 
-class ActorStrictSchema(ActorSchema):
+class PersonStrictSchema(ActorSchema):
+    """
+    Strict schema for :class:`plex_schema.model.Person`
+    """
+
+    name = fields.Str(allow_none=False, required=True)
+    photo = fields.Str(allow_none=False, required=True)
+
+
+class ActorStrictSchema(PersonStrictSchema):
     """
     Strict schema for :class:`plex_schema.model.Actor`
     """
 
-    name = fields.Str(allow_none=False, required=True)
     role = fields.Str(allow_none=False, required=True)
-    photo = fields.Str(allow_none=False, required=True)
 
 
 class ShowStrictSchema(ShowSchema):
@@ -197,21 +232,38 @@ class ShowStrictSchema(ShowSchema):
     sort_title = fields.Str(allow_none=False, required=True)
     original_title = fields.Str(allow_none=False, required=True)
     content_rating = fields.Str(allow_none=False, required=True)
-    tagline = fields.Str(allow_none=True)
-    studio = fields.Str(allow_none=False, required=True)
+    tagline = fields.List(
+        fields.Str(allow_none=False),
+        allow_none=False,
+        required=True
+    )
+    studio = fields.List(
+        fields.Str(allow_none=False),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
     aired = PatchDateField(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     rating = fields.Float(validate=Range(min=0, max=10), allow_none=True)
-    genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1),
-                         allow_none=False, required=True)
-    collections = fields.List(fields.Str(allow_none=False),
-                              validate=Length(min=1),
-                              allow_none=False,
-                              required=True)
-    actors = fields.List(fields.Nested(ActorSchema, allow_none=False),
-                         validate=Length(min=1),
-                         allow_none=False,
-                         required=True)
+    genres = fields.List(
+        fields.Str(allow_none=False),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
+    collections = fields.List(
+        fields.Str(allow_none=False),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
+    actors = fields.List(
+        fields.Nested(ActorSchema, allow_none=False, only=["name", "role"]),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
 
 
 class EpisodeStrictSchema(EpisodeSchema):
@@ -219,21 +271,30 @@ class EpisodeStrictSchema(EpisodeSchema):
     Strict schema for :class:`plex_schema.model.Episode`
     """
 
-    title = fields.Str(allow_none=False, required=True)
+    title = fields.List(
+        fields.Str(allow_none=False),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
     episode = fields.Int(validate=Range(min=1),
                          allow_none=False,
                          required=True)
     aired = PatchDateField(allow_none=True)
     content_rating = fields.Str(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
-    directors = fields.List(fields.Str(allow_none=False),
-                            validate=Length(min=1),
-                            allow_none=False,
-                            required=True)
-    writers = fields.List(fields.Str(allow_none=False),
-                          validate=Length(min=1),
-                          allow_none=False,
-                          required=True)
+    directors = fields.List(
+        fields.Nested(PersonStrictSchema, allow_none=False, only="name"),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
+    writers = fields.List(
+        fields.Nested(PersonStrictSchema, allow_none=False, only="name"),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
     rating = fields.Float(validate=Range(min=0, max=10), allow_none=True)
 
 
@@ -246,28 +307,50 @@ class MovieStrictSchema(MovieSchema):
     sort_title = fields.Str(allow_none=False, required=True)
     original_title = fields.Str(allow_none=False, required=True)
     content_rating = fields.Str(allow_none=False, required=True)
-    tagline = fields.Str(allow_none=True)
-    studio = fields.Str(allow_none=False, required=True)
+    tagline = fields.List(
+        fields.Str(allow_none=False),
+        allow_none=False,
+        required=True
+    )
+    studio = fields.List(
+        fields.Str(allow_none=False),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
     aired = PatchDateField(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     rating = fields.Float(validate=Range(min=0, max=10))
-    genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1))
-    collections = fields.List(fields.Str(allow_none=False),
-                              validate=Length(min=1),
-                              allow_none=False,
-                              required=True)
-    actors = fields.List(fields.Nested(ActorSchema, allow_none=False),
-                         validate=Length(min=1),
-                         allow_none=False,
-                         required=True)
-    writers = fields.List(fields.Str(allow_none=False),
-                          validate=Length(min=1),
-                          allow_none=False,
-                          required=True)
-    directors = fields.List(fields.Str(allow_none=False),
-                            validate=Length(min=1),
-                            allow_none=False,
-                            required=True)
+    genres = fields.List(
+        fields.Str(allow_none=False),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
+    collections = fields.List(
+        fields.Str(allow_none=False),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
+    actors = fields.List(
+        fields.Nested(ActorSchema, allow_none=False, only=["name", "role"]),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
+    writers = fields.List(
+        fields.Nested(PersonStrictSchema, allow_none=False, only="name"),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
+    directors = fields.List(
+        fields.Nested(PersonStrictSchema, allow_none=False, only="name"),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
 
 
 class ArtistStrictSchema(ArtistSchema):
@@ -279,10 +362,12 @@ class ArtistStrictSchema(ArtistSchema):
     summary = fields.Str(allow_none=False, required=True)
     similar = fields.List(fields.Str(allow_none=False), allow_none=False)
     genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1))
-    collections = fields.List(fields.Str(allow_none=False),
-                              validate=Length(min=1),
-                              allow_none=False,
-                              required=True)
+    collections = fields.List(
+        fields.Str(allow_none=False),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )
 
 
 class AlbumStrictSchema(AlbumSchema):
@@ -294,7 +379,9 @@ class AlbumStrictSchema(AlbumSchema):
     summary = fields.Str(allow_none=False, required=True)
     aired = PatchDateField(allow_none=False, required=True)
     genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1))
-    collections = fields.List(fields.Str(allow_none=False),
-                              validate=Length(min=1),
-                              allow_none=False,
-                              required=True)
+    collections = fields.List(
+        fields.Str(allow_none=False),
+        validate=Length(min=1),
+        allow_none=False,
+        required=True
+    )

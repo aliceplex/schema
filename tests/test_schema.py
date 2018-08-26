@@ -1,3 +1,5 @@
+from dataclasses import asdict
+
 from marshmallow import ValidationError
 from pytest import raises
 
@@ -7,24 +9,9 @@ from plex_schema import Actor, ActorSchema, ActorStrictSchema, Album, \
     MovieStrictSchema, Show, ShowSchema, ShowStrictSchema
 
 
-def test_actor_schema_load(actor_schema: ActorSchema, actor: Actor):
-    load_actor = actor_schema.load({
-        "name": "name",
-        "role": "role",
-        "photo": "photo"
-    })
-
-    assert load_actor == actor
-
-
 def test_actor_schema_dump(actor_schema: ActorSchema, actor: Actor):
     dump_actor = actor_schema.dump(actor)
-    dict_actor = {
-        "name": "name",
-        "role": "role",
-        "photo": "photo"
-    }
-    assert dump_actor == dict_actor
+    assert dump_actor == asdict(actor)
 
 
 def test_actor_schema_load_error(actor_schema: ActorSchema):
@@ -36,51 +23,16 @@ def test_actor_schema_load_error(actor_schema: ActorSchema):
         })
 
 
-def test_show_schema_load(show_schema: ShowSchema, show: Show,
-                          dummy_date_str: str):
-    load_show = show_schema.load({
-        "title": "title",
-        "sort_title": "sort_title",
-        "original_title": "original_title",
-        "content_rating": "content_rating",
-        "tagline": "tagline",
-        "studio": "studio",
-        "aired": dummy_date_str,
-        "summary": "summary",
-        "rating": 1,
-        "genres": ["genres"],
-        "collections": ["collections"],
-        "actors": [{
-            "name": "name",
-            "role": "role",
-            "photo": "photo"
-        }]
-    })
-
-    assert load_show == show
-
-
-def test_show_schema_dump(show_schema: ShowSchema, show: Show,
+def test_show_schema_dump(show_schema: ShowSchema,
+                          show: Show,
                           dummy_date_str: str):
     dump_show = show_schema.dump(show)
-    dict_show = {
-        "title": "title",
-        "sort_title": "sort_title",
-        "original_title": "original_title",
-        "content_rating": "content_rating",
-        "tagline": "tagline",
-        "studio": "studio",
-        "aired": dummy_date_str,
-        "summary": "summary",
-        "rating": 1,
-        "genres": ["genres"],
-        "collections": ["collections"],
-        "actors": [{
-            "name": "name",
-            "role": "role",
-            "photo": "photo"
-        }]
-    }
+    dict_show = asdict(show)
+    dict_show["aired"] = dummy_date_str
+    dict_show["actors"] = [{
+        "name": a["name"],
+        "role": a["role"]
+    } for a in dict_show["actors"]]
     assert dump_show == dict_show
 
 
@@ -94,35 +46,14 @@ def test_show_schema_load_error(show_schema: ShowSchema):
         })
 
 
-def test_episode_schema_load(episode_schema: EpisodeSchema, episode: Episode,
-                             dummy_date_str: str):
-    load_episode = episode_schema.load({
-        "title": "title",
-        "episode": 1,
-        "content_rating": "content_rating",
-        "aired": dummy_date_str,
-        "summary": "summary",
-        "rating": 1,
-        "writers": ["writers"],
-        "directors": ["directors"]
-    })
-
-    assert load_episode == episode
-
-
-def test_episode_schema_dump(episode_schema: EpisodeSchema, episode: Episode,
+def test_episode_schema_dump(episode_schema: EpisodeSchema,
+                             episode: Episode,
                              dummy_date_str: str):
     dump_episode = episode_schema.dump(episode)
-    dict_episode = {
-        "title": "title",
-        "episode": 1,
-        "content_rating": "content_rating",
-        "aired": dummy_date_str,
-        "summary": "summary",
-        "rating": 1,
-        "writers": ["writers"],
-        "directors": ["directors"]
-    }
+    dict_episode = asdict(episode)
+    dict_episode["aired"] = dummy_date_str
+    dict_episode["directors"] = [d["name"] for d in dict_episode["directors"]]
+    dict_episode["writers"] = [w["name"] for w in dict_episode["writers"]]
     assert dump_episode == dict_episode
 
 
@@ -134,55 +65,18 @@ def test_episode_schema_load_error(episode_schema: EpisodeSchema):
         })
 
 
-def test_movie_schema_load(movie_schema: MovieSchema, movie: Movie,
-                           dummy_date_str: str):
-    load_movie = movie_schema.load({
-        "title": "title",
-        "sort_title": "sort_title",
-        "original_title": "original_title",
-        "content_rating": "content_rating",
-        "tagline": "tagline",
-        "studio": "studio",
-        "aired": dummy_date_str,
-        "summary": "summary",
-        "rating": 1,
-        "genres": ["genres"],
-        "collections": ["collections"],
-        "actors": [{
-            "name": "name",
-            "role": "role",
-            "photo": "photo"
-        }],
-        "writers": ["writers"],
-        "directors": ["directors"]
-    })
-
-    assert load_movie == movie
-
-
-def test_movie_schema_dump(movie_schema: MovieSchema, movie: Movie,
+def test_movie_schema_dump(movie_schema: MovieSchema,
+                           movie: Movie,
                            dummy_date_str: str):
     dump_movie = movie_schema.dump(movie)
-    dict_movie = {
-        "title": "title",
-        "sort_title": "sort_title",
-        "original_title": "original_title",
-        "content_rating": "content_rating",
-        "tagline": "tagline",
-        "studio": "studio",
-        "aired": dummy_date_str,
-        "summary": "summary",
-        "rating": 1,
-        "genres": ["genres"],
-        "collections": ["collections"],
-        "actors": [{
-            "name": "name",
-            "role": "role",
-            "photo": "photo"
-        }],
-        "writers": ["writers"],
-        "directors": ["directors"]
-    }
+    dict_movie = asdict(movie)
+    dict_movie["aired"] = dummy_date_str
+    dict_movie["directors"] = [d["name"] for d in dict_movie["directors"]]
+    dict_movie["writers"] = [w["name"] for w in dict_movie["writers"]]
+    dict_movie["actors"] = [{
+        "name": a["name"],
+        "role": a["role"]
+    } for a in dict_movie["actors"]]
     assert dump_movie == dict_movie
 
 
@@ -197,27 +91,13 @@ def test_movie_schema_load_error(movie_schema: MovieSchema):
 
 
 def test_artist_schema_load(artist_schema: ArtistSchema, artist: Artist):
-    load_artist = artist_schema.load({
-        "name": "name",
-        "summary": "summary",
-        "genres": ["genres"],
-        "collections": ["collections"],
-        "similar": ["similar"]
-    })
-
+    load_artist = artist_schema.load(asdict(artist))
     assert load_artist == artist
 
 
 def test_artist_schema_dump(artist_schema: ArtistSchema, artist: Artist):
     dump_artist = artist_schema.dump(artist)
-    dict_artist = {
-        "name": "name",
-        "summary": "summary",
-        "genres": ["genres"],
-        "collections": ["collections"],
-        "similar": ["similar"]
-    }
-    assert dump_artist == dict_artist
+    assert dump_artist == asdict(artist)
 
 
 def test_artist_schema_load_error(artist_schema: ArtistSchema):
@@ -231,29 +111,18 @@ def test_artist_schema_load_error(artist_schema: ArtistSchema):
         })
 
 
-def test_album_schema_load(album_schema: AlbumSchema, album: Album,
-                           dummy_date_str: str):
-    load_album = album_schema.load({
-            "name": "name",
-            "summary": "summary",
-            "genres": ["genres"],
-            "collections": ["collections"],
-            "aired": dummy_date_str
-        })
+def test_album_schema_load(album_schema: AlbumSchema, album: Album):
+    load_album = album_schema.load(asdict(album))
 
     assert load_album == album
 
 
-def test_album_schema_dump(album_schema: AlbumSchema, album: Album,
+def test_album_schema_dump(album_schema: AlbumSchema,
+                           album: Album,
                            dummy_date_str: str):
     dump_album = album_schema.dump(album)
-    dict_album = {
-            "name": "name",
-            "summary": "summary",
-            "genres": ["genres"],
-            "collections": ["collections"],
-            "aired": dummy_date_str
-        }
+    dict_album = asdict(album)
+    dict_album["aired"] = dummy_date_str
     assert dump_album == dict_album
 
 
