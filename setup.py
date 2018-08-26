@@ -4,7 +4,7 @@ with open("README.md", "r") as readme:
     long_description = readme.read()
 
 setup(name="plex_schema",
-      version="2.0.0",
+      version="2.0.1",
       author="Alice",
       url="https://git.joshuaavalon.io/alice/plex-schema",
       description="Schema library for Plex",
@@ -12,7 +12,7 @@ setup(name="plex_schema",
       long_description_content_type="text/markdown",
       python_requires=">=3.7",
       packages=find_packages(exclude=["tests"]),
-      install_requires=["marshmallow==3.0.0b12"],
+      install_requires=["marshmallow==3.0.0b13"],
       classifiers=(
           "Programming Language :: Python :: 3",
           "Programming Language :: Python :: 3 :: Only",
