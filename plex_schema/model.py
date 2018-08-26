@@ -4,7 +4,7 @@ This module provides dataclass common Plex data object.
 
 from dataclasses import dataclass, field
 from datetime import date
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 __all__ = ["Actor", "Show", "Episode", "Movie", "Album", "Artist", "Person"]
 
@@ -45,6 +45,7 @@ class Show:
     genres: List[str] = field(default_factory=list)
     collections: List[str] = field(default_factory=list)
     actors: List[Actor] = field(default_factory=list)
+    season_summary: Dict[int, str] = field(default_factory=dict)
 
 
 @dataclass

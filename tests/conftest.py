@@ -32,7 +32,8 @@ def show(actor: Actor, dummy_date: date) -> Show:
         rating=1,
         genres=["genres"],
         collections=["collections"],
-        actors=[actor]
+        actors=[actor],
+        season_summary={1: "Season 1 Summary"}
     )
 
 

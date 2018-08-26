@@ -109,6 +109,7 @@ class ShowSchema(DataClassSchema):
         fields.Nested(ActorSchema, allow_none=False, only=["name", "role"]),
         allow_none=False
     )
+    season_summary = fields.Dict(keys=fields.Int(), values=fields.Str())
 
     @property
     def data_class(self) -> type:
@@ -264,6 +265,10 @@ class ShowStrictSchema(ShowSchema):
         allow_none=False,
         required=True
     )
+    season_summary = fields.Dict(keys=fields.Int(),
+                                 values=fields.Str(),
+                                 allow_none=False,
+                                 required=True)
 
 
 class EpisodeStrictSchema(EpisodeSchema):
