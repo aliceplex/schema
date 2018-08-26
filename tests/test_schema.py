@@ -11,8 +11,7 @@ def test_actor_schema_load(actor_schema: ActorSchema, actor: Actor):
     load_actor = actor_schema.load({
         "name": "name",
         "role": "role",
-        "photo": "photo",
-        "extra": "extra"
+        "photo": "photo"
     })
 
     assert load_actor == actor
