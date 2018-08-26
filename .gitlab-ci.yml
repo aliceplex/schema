@@ -59,9 +59,10 @@ pages:
     - pip install -r requirements.docs.txt
 
   script:
-    - sphinx-build -r master docs docs/_build/html
-    - mv docs/_build/html public
-    - mv htmlcov public/htmlcov
+    - cd docs
+    - make html
+    - mv _build/html ../public
+    - mv ../htmlcov ../public/htmlcov
 
   artifacts:
     paths:
