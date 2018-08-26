@@ -23,6 +23,8 @@ class Actor(Person):
     """
     Represent an actor.
     """
+    name: Optional[str] = None
+    photo: Optional[str] = None
     role: Optional[str] = None
 
 
