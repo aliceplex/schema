@@ -89,7 +89,6 @@ class Artist:
     """
     Represent an artist of an album.
     """
-    name: Optional[str] = None
     collections: List[str] = field(default_factory=list)
     genres: List[str] = field(default_factory=list)
     summary: Optional[str] = None
@@ -101,7 +100,6 @@ class Album:
     """
     Represent an album.
     """
-    name: Optional[str] = None
     aired: Optional[date] = None
     collections: List[str] = field(default_factory=list)
     genres: List[str] = field(default_factory=list)

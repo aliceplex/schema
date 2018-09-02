@@ -180,7 +180,6 @@ class ArtistSchema(DataClassSchema):
     Schema for :class:`plex_schema.model.Artist`
     """
 
-    name = fields.Str()
     summary = fields.Str()
     similar = fields.List(fields.Str(allow_none=False), allow_none=False)
     genres = fields.List(fields.Str(allow_none=False), allow_none=False)
@@ -196,7 +195,6 @@ class AlbumSchema(DataClassSchema):
     Schema for :class:`plex_schema.model.Album`
     """
 
-    name = fields.Str()
     summary = fields.Str()
     aired = PatchDateField()
     genres = fields.List(fields.Str(allow_none=False), allow_none=False)
@@ -363,7 +361,6 @@ class ArtistStrictSchema(ArtistSchema):
     Strict schema for :class:`plex_schema.model.Artist`
     """
 
-    name = fields.Str(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     similar = fields.List(fields.Str(allow_none=False), allow_none=False)
     genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1))
@@ -380,7 +377,6 @@ class AlbumStrictSchema(AlbumSchema):
     Strict schema for :class:`plex_schema.model.Album`
     """
 
-    name = fields.Str(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     aired = PatchDateField(allow_none=False, required=True)
     genres = fields.List(fields.Str(allow_none=False), validate=Length(min=1))

@@ -74,7 +74,6 @@ def movie(actor: Actor, dummy_date: date, person: Person) -> Movie:
 @fixture
 def artist() -> Artist:
     return Artist(
-        name="name",
         summary="summary",
         collections=["collections"],
         genres=["genres"],
@@ -85,7 +84,6 @@ def artist() -> Artist:
 @fixture
 def album(dummy_date: date) -> Album:
     return Album(
-        name="name",
         aired=dummy_date,
         collections=["collections"],
         genres=["genres"],
