@@ -40,7 +40,7 @@ class DataClassSchema(Schema):
             f_type = field.type
             origin = getattr(f_type, "__origin__", None)
             args = getattr(f_type, "__args__", ())
-            if f_type == list or origin == list:
+            if list in (f_type, origin):
                 if data[name] is None:
                     # Convert None to empty list for List field
                     data[name] = []
@@ -48,7 +48,7 @@ class DataClassSchema(Schema):
                     # Filter None and empty string in list
                     data[name] = [value for value in data[name]
                                   if value is not None and value != ""]
-            elif ((f_type == str or origin == str or str in args) and
+            elif ((str in (f_type, origin) or str in args) and
                   data[name] == ""):
                 # Replace empty string with None
                 data[name] = None
