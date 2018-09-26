@@ -41,7 +41,7 @@ flake8:
 
   before_script:
     - python -V
-    - pip install flake8==3.5.0
+    - pip install flake8==3.5.0 flake8-per-file-ignores==0.6
     - flake8 --version
 
   script:
