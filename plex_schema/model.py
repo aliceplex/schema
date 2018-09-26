@@ -54,7 +54,6 @@ class Episode:
     Represent an episode.
     """
     title: List[str] = field(default_factory=list)
-    episode: Optional[int] = None
     aired: Optional[date] = None
     content_rating: Optional[str] = None
     summary: Optional[str] = None
