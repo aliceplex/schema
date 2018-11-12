@@ -205,4 +205,5 @@ def normalize(string: str) -> str:
     result = replace_tilde(result)
     result = replace_dot(result)
     result = replace_arrow_brackets(result)
+    result = result.strip()
     return result
