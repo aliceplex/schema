@@ -96,7 +96,8 @@ def test_movie_schema_dump(movie_schema: MovieSchema):
         "collections": ["collections"],
         "actors": [{
             "name": "name",
-            "role": "role"
+            "role": "role",
+            "photo": None
         }],
         "writers": ["person"],
         "directors": ["person"]
@@ -210,7 +211,8 @@ def test_movie_strict_schema_dump(movie_strict_schema: MovieStrictSchema):
         "collections": ["collections"],
         "actors": [{
             "name": "name",
-            "role": "role"
+            "role": "role",
+            "photo": None
         }],
         "writers": ["person"],
         "directors": ["person"]

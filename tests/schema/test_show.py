@@ -94,7 +94,8 @@ def test_show_schema_dump(show_schema: ShowSchema):
         "collections": ["collections"],
         "actors": [{
             "name": "name",
-            "role": "role"
+            "role": "role",
+            "photo": None
         }],
         "season_summary": {
             1: "Season 1 Summary"
@@ -206,7 +207,8 @@ def test_show_strict_schema_dump(show_strict_schema: ShowStrictSchema):
         "collections": ["collections"],
         "actors": [{
             "name": "name",
-            "role": "role"
+            "role": "role",
+            "photo": None
         }],
         "season_summary": {
             1: "Season 1 Summary"
