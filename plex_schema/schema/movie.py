@@ -32,7 +32,7 @@ class MovieSchema(DataClassSchema):
     genres = fields.List(fields.Str(allow_none=False), allow_none=False)
     collections = fields.List(fields.Str(allow_none=False), allow_none=False)
     actors = fields.List(
-        fields.Nested(ActorSchema, allow_none=False, only=["name", "role"]),
+        fields.Nested(ActorSchema, allow_none=False),
         allow_none=False
     )
     writers = fields.List(
@@ -85,7 +85,7 @@ class MovieStrictSchema(MovieSchema):
         required=True
     )
     actors = fields.List(
-        fields.Nested(ActorSchema, allow_none=False, only=["name", "role"]),
+        fields.Nested(ActorSchema, allow_none=False),
         validate=Length(min=1),
         allow_none=False,
         required=True
