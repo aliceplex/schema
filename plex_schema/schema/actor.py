@@ -24,5 +24,5 @@ class ActorStrictSchema(ActorSchema):
     """
 
     name = fields.Str(allow_none=False, required=True)
-    photo = fields.Str(allow_none=True)
     role = fields.Str(allow_none=False, required=True)
+    photo = fields.Str(allow_none=True)
