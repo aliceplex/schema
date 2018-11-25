@@ -7,6 +7,12 @@ def test_remove_trailing_space():
     assert format.remove_trailing_space(source) == result
 
 
+def test_remove_leading_space():
+    source = " test \n test  \ntest\n"
+    result = "test\ntest\ntest"
+    assert format.remove_leading_space(source) == result
+
+
 def test_replace_continuous_newlines():
     source = "test\ntest\n\ntest\n\n\ntest"
     result = "test\ntest\n\ntest\n\ntest"
