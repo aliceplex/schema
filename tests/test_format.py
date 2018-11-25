@@ -9,7 +9,7 @@ def test_remove_trailing_space():
 
 def test_remove_leading_space():
     source = " test \n test  \n  test\n"
-    result = "test\ntest  \ntest"
+    result = "test \ntest  \ntest"
     assert format.remove_leading_space(source) == result
 
 
