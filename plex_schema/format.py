@@ -26,6 +26,10 @@ def remove_trailing_space(string: str) -> str:
     return re.sub(r"\s+$", "", result)
 
 
+def remove_leading_space(string: str) -> str:
+    return re.sub(r"^[ \t]*", "", string, flags=re.MULTILINE)
+
+
 def replace_continuous_newlines(string: str) -> str:
     """
     Replace more than two continuous newline with two newline.
@@ -198,6 +202,7 @@ def normalize(string: str) -> str:
     """
     result = unicodedata.normalize("NFKC", string)
     result = remove_trailing_space(result)
+    result = remove_leading_space(result)
     result = replace_continuous_newlines(result)
     result = replace_continuous_space(result)
     result = replace_ending_space(result)
