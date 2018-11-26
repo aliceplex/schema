@@ -1,5 +1,9 @@
 # aliceplex-schema
 
+[![PyPI](https://img.shields.io/pypi/v/aliceplex-schema.svg)](https://pypi.org/project/aliceplex-schema) 
+[![License](https://img.shields.io/github/license/aliceplex/schema.svg)](https://github.com/aliceplex/schema/blob/master/LICENSE) 
+[![Documentation Status](https://readthedocs.org/projects/aliceplex-schema/badge/?version=latest)](https://aliceplex-schema.readthedocs.io/en/latest/?badge=latest)
+
 aliceplex-schema is a schema library for Plex. It provides basic Plex related model.
 This can be used to develop other Plex library.
 
