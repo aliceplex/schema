@@ -72,7 +72,7 @@ wheel:deploy:
     - pip install twine
 
   script:
-    - twine upload --repository-url https://pypi.joshuaavalon.io -u $PYPI_USER -p $PYPI_TOKEN dist/*
+    - twine upload -u $PYPI_USER -p $PYPI_TOKEN dist/*
 
   only:
     refs:
