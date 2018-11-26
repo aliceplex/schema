@@ -2,7 +2,6 @@ from marshmallow import fields
 from marshmallow.validate import Length, Range
 
 from aliceplex.schema.model import Movie
-from aliceplex.schema.patch import PatchDateField
 from aliceplex.schema.schema.actor import ActorSchema
 from aliceplex.schema.schema.base import DataClassSchema
 from aliceplex.schema.schema.person import PersonSchema, PersonStrictSchema
@@ -21,7 +20,7 @@ class MovieSchema(DataClassSchema):
     content_rating = fields.Str(allow_none=True)
     tagline = fields.List(fields.Str(allow_none=False), allow_none=False)
     studio = fields.List(fields.Str(allow_none=False), allow_none=False)
-    aired = PatchDateField(allow_none=True)
+    aired = fields.Date(allow_none=True)
     summary = fields.Str(allow_none=True)
     rating = fields.Float(validate=Range(min=0, max=10), allow_none=True)
     genres = fields.List(fields.Str(allow_none=False), allow_none=False)
@@ -64,7 +63,7 @@ class MovieStrictSchema(MovieSchema):
         allow_none=False,
         required=True
     )
-    aired = PatchDateField(allow_none=False, required=True)
+    aired = fields.Date(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     rating = fields.Float(validate=Range(min=0, max=10), allow_none=False)
     genres = fields.List(

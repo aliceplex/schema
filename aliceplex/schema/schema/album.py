@@ -2,7 +2,6 @@ from marshmallow import fields
 from marshmallow.validate import Length
 
 from aliceplex.schema.model import Album
-from aliceplex.schema.patch import PatchDateField
 from aliceplex.schema.schema.base import DataClassSchema
 
 __all__ = ["AlbumSchema", "AlbumStrictSchema"]
@@ -14,7 +13,7 @@ class AlbumSchema(DataClassSchema):
     """
 
     summary = fields.Str(allow_none=True)
-    aired = PatchDateField(allow_none=True)
+    aired = fields.Date(allow_none=True)
     genres = fields.List(fields.Str(allow_none=True), allow_none=True)
     collections = fields.List(fields.Str(allow_none=True), allow_none=True)
 
@@ -29,7 +28,7 @@ class AlbumStrictSchema(AlbumSchema):
     """
 
     summary = fields.Str(allow_none=False, required=True)
-    aired = PatchDateField(allow_none=False, required=True)
+    aired = fields.Date(allow_none=False, required=True)
     genres = fields.List(
         fields.Str(allow_none=False),
         validate=Length(min=1),

@@ -2,7 +2,6 @@ from marshmallow import fields
 from marshmallow.validate import Length, Range
 
 from aliceplex.schema.model import Episode
-from aliceplex.schema.patch import PatchDateField
 from aliceplex.schema.schema.base import DataClassSchema
 from aliceplex.schema.schema.person import PersonSchema, PersonStrictSchema
 
@@ -15,7 +14,7 @@ class EpisodeSchema(DataClassSchema):
     """
 
     title = fields.List(fields.Str(allow_none=False), allow_none=False)
-    aired = PatchDateField(allow_none=True)
+    aired = fields.Date(allow_none=True)
     content_rating = fields.Str(allow_none=True)
     summary = fields.Str(allow_none=True)
     directors = fields.List(
@@ -44,7 +43,7 @@ class EpisodeStrictSchema(EpisodeSchema):
         allow_none=False,
         required=True
     )
-    aired = PatchDateField(allow_none=True)
+    aired = fields.Date(allow_none=True)
     content_rating = fields.Str(allow_none=False, required=True)
     summary = fields.Str(allow_none=False, required=True)
     directors = fields.List(
