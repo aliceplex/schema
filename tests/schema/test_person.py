@@ -1,7 +1,7 @@
 import pytest
 from marshmallow import ValidationError
 
-from plex_schema import Person, PersonSchema, PersonStrictSchema
+from aliceplex.schema import Person, PersonSchema, PersonStrictSchema
 
 
 def test_person_schema_load(person_schema: PersonSchema):

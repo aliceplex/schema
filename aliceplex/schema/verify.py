@@ -1,7 +1,3 @@
-"""
-This module provides functions to verify string.
-"""
-
 import re
 
 

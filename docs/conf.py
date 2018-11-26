@@ -6,14 +6,14 @@ sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
 
-project = "plex-schema"
-copyright = "2018, Alice"
-author = "Alice"
+project = "aliceplex-schema"
+copyright = "2018, Alice Plex"
+author = "Alice Plex"
 
 # The short X.Y version
-version = "2.3.1"
+version = "3.0.0"
 # The full version, including alpha/beta/rc tags
-release = "2.3.1"
+release = "3.0.0"
 
 # -- General configuration ---------------------------------------------------
 
@@ -62,7 +62,7 @@ pygments_style = "sphinx"
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
+html_theme = "alabaster"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -89,7 +89,7 @@ html_static_path = ["_static"]
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "plex-schemadoc"
+htmlhelp_basename = "aliceplex-schemadoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -115,7 +115,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "plex-schema.tex", "plex-schema Documentation",
+    (master_doc, "aliceplex-schema.tex", "aliceplex-schema Documentation",
      author, "manual"),
 ]
 
@@ -124,7 +124,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, "plex-schema", "plex-schema Documentation",
+    (master_doc, "aliceplex-schema", "aliceplex-schema Documentation",
      [author], 1)
 ]
 

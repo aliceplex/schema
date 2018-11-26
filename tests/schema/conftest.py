@@ -1,6 +1,6 @@
 from pytest import fixture
 
-from plex_schema import ActorSchema, ActorStrictSchema, AlbumSchema, \
+from aliceplex.schema import ActorSchema, ActorStrictSchema, AlbumSchema, \
     AlbumStrictSchema, ArtistSchema, ArtistStrictSchema, EpisodeSchema, \
     EpisodeStrictSchema, MovieSchema, MovieStrictSchema, PersonSchema, \
     PersonStrictSchema, ShowSchema, ShowStrictSchema

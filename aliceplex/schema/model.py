@@ -1,7 +1,3 @@
-"""
-This module provides dataclass common Plex data object.
-"""
-
 from dataclasses import dataclass, field
 from datetime import date
 from typing import Dict, List, Optional

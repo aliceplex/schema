@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 from marshmallow import ValidationError
 
-from plex_schema import Episode, EpisodeSchema, EpisodeStrictSchema, Person
+from aliceplex.schema import Episode, EpisodeSchema, EpisodeStrictSchema, Person
 
 
 def test_episode_schema_load(episode_schema: EpisodeSchema):

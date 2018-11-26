@@ -1,4 +1,4 @@
-from plex_schema import verify
+from aliceplex.schema import verify
 
 
 def test_has_diacritics():

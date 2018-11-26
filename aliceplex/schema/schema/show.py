@@ -1,22 +1,17 @@
-"""
-This module provides schema object to convert between common Plex data object
-and dictionary.
-"""
-
 from marshmallow import fields
 from marshmallow.validate import Length, Range
 
-from plex_schema.model import Show
-from plex_schema.patch import PatchDateField
-from plex_schema.schema.actor import ActorSchema
-from plex_schema.schema.base import DataClassSchema
+from aliceplex.schema.model import Show
+from aliceplex.schema.patch import PatchDateField
+from aliceplex.schema.schema.actor import ActorSchema
+from aliceplex.schema.schema.base import DataClassSchema
 
 __all__ = ["ShowSchema", "ShowStrictSchema"]
 
 
 class ShowSchema(DataClassSchema):
     """
-    Schema for :class:`plex_schema.model.Show`
+    Schema for :class:`aliceplex.schema.model.Show`
     """
 
     title = fields.Str(allow_none=True)
@@ -47,7 +42,7 @@ class ShowSchema(DataClassSchema):
 
 class ShowStrictSchema(ShowSchema):
     """
-    Strict schema for :class:`plex_schema.model.Show`
+    Strict schema for :class:`aliceplex.schema.model.Show`
     """
 
     title = fields.Str(allow_none=False, required=True)

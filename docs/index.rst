@@ -1,21 +1,20 @@
-Welcome to plex-schema's documentation!
-=======================================
+Welcome to aliceplex-schema's documentation!
+=============================================
 
-plex-schema is schema library for Plex.
+aliceplex-schema is a schema library for Plex. It provides basic Plex related model.
+This can be used to develop other Plex library.
+
+Install
+--------
+
+.. code-block:: bash
+
+    pip install -i aliceplex-schema
+
 
 .. toctree::
    :maxdepth: 2
    :caption: Table of Contents:
 
    usage.rst
-   module/modules.rst
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-* `Coverage Report <./htmlcov>`_
+   module/aliceplex.schema.rst

@@ -1,13 +1,14 @@
-# plex-schema
+# aliceplex-schema
 
-plex-schema is schema library for Plex.
+aliceplex-schema is a schema library for Plex. It provides basic Plex related model.
+This can be used to develop other Plex library.
 
 ## Install
 
 ```bash
-pip install -i https://pypi.joshuaavalon.io plex-schema
+pip install -i aliceplex-schema
 ```
 
 ## Documentation
 
-See [documentation](https://alice.joshuaavalon.app/plex-schema).
+See [documentation](https://github.com/aliceplex/schema).

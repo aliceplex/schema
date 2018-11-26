@@ -10,11 +10,11 @@ pylint:
   before_script:
     - python -V
     - pip install -r requirements.txt
-    - pip install pylint==2.0.1
+    - pip install pylint>=2.1.1
     - pylint --version
 
   script:
-    - pylint plex_schema
+    - pylint aliceplex
 
 pytest:
   image: python:3.7
@@ -23,17 +23,11 @@ pytest:
   before_script:
     - python -V
     - pip install -r requirements.txt
-    - pip install pytest==3.6.3
-    - pip install pytest-cov==2.5.1
+    - pip install pytest>=4.0.1 pytest-cov>=2.6.0
     - pytest --version
 
   script:
-    - pytest --cov-report html --cov-report term --cov=plex_schema tests
-
-  artifacts:
-    paths:
-      - htmlcov
-    expire_in: 1h
+    - pytest tests
 
 flake8:
   image: python:3.7
@@ -41,37 +35,11 @@ flake8:
 
   before_script:
     - python -V
-    - pip install flake8==3.5.0 flake8-per-file-ignores==0.6
+    - pip install flake8>=3.6.0
     - flake8 --version
 
   script:
-    - flake8 plex_schema
-
-pages:
-  image: python:3.7
-  stage: build
-
-  dependencies:
-    - pytest
-
-  before_script:
-    - python -V
-    - pip install -r requirements.docs.txt
-
-  script:
-    - cd docs
-    - make html
-    - mv _build/html ../public
-    - mv ../htmlcov ../public/htmlcov
-
-  artifacts:
-    paths:
-      - public
-    expire_in: 1h
-
-  only:
-    - tags
-    - master
+    - flake8 aliceplex
 
 wheel:
   image: python:3.7

@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 from marshmallow import ValidationError
 
-from plex_schema import Album, AlbumSchema, AlbumStrictSchema
+from aliceplex.schema import Album, AlbumSchema, AlbumStrictSchema
 
 
 def test_album_schema_load(album_schema: AlbumSchema):

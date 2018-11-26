@@ -1,7 +1,7 @@
 import pytest
 from marshmallow import ValidationError
 
-from plex_schema import Artist, ArtistSchema, ArtistStrictSchema
+from aliceplex.schema import Artist, ArtistSchema, ArtistStrictSchema
 
 
 def test_artist_schema_load(artist_schema: ArtistSchema):

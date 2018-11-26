@@ -1,4 +1,4 @@
-from plex_schema import format
+from aliceplex.schema import format
 
 
 def test_remove_trailing_space():
@@ -9,7 +9,7 @@ def test_remove_trailing_space():
 
 def test_remove_leading_space():
     source = " test \n test  \n  test\n"
-    result = "test \ntest  \ntest"
+    result = "test \ntest  \ntest\n"
     assert format.remove_leading_space(source) == result
 
 

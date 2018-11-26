@@ -1,23 +1,18 @@
-"""
-This module provides schema object to convert between common Plex data object
-and dictionary.
-"""
-
 from marshmallow import fields
 from marshmallow.validate import Length, Range
 
-from plex_schema.model import Movie
-from plex_schema.patch import PatchDateField
-from plex_schema.schema.actor import ActorSchema
-from plex_schema.schema.base import DataClassSchema
-from plex_schema.schema.person import PersonSchema, PersonStrictSchema
+from aliceplex.schema.model import Movie
+from aliceplex.schema.patch import PatchDateField
+from aliceplex.schema.schema.actor import ActorSchema
+from aliceplex.schema.schema.base import DataClassSchema
+from aliceplex.schema.schema.person import PersonSchema, PersonStrictSchema
 
 __all__ = ["MovieSchema", "MovieStrictSchema"]
 
 
 class MovieSchema(DataClassSchema):
     """
-    Schema for :class:`plex_schema.model.Movie`
+    Schema for :class:`aliceplex.schema.model.Movie`
     """
 
     title = fields.Str(allow_none=True)
@@ -36,11 +31,11 @@ class MovieSchema(DataClassSchema):
         allow_none=False
     )
     writers = fields.List(
-        fields.Nested(PersonSchema, allow_none=False, only="name"),
+        fields.Pluck(PersonSchema, "name", allow_none=False),
         allow_none=False
     )
     directors = fields.List(
-        fields.Nested(PersonSchema, allow_none=False, only="name"),
+        fields.Pluck(PersonSchema, "name", allow_none=False),
         allow_none=False
     )
 
@@ -51,7 +46,7 @@ class MovieSchema(DataClassSchema):
 
 class MovieStrictSchema(MovieSchema):
     """
-    Strict schema for :class:`plex_schema.model.Movie`
+    Strict schema for :class:`aliceplex.schema.model.Movie`
     """
 
     title = fields.Str(allow_none=False, required=True)
@@ -91,12 +86,12 @@ class MovieStrictSchema(MovieSchema):
         required=True
     )
     writers = fields.List(
-        fields.Nested(PersonStrictSchema, allow_none=False, only="name"),
+        fields.Pluck(PersonStrictSchema, "name", allow_none=False),
         allow_none=False,
         required=True
     )
     directors = fields.List(
-        fields.Nested(PersonStrictSchema, allow_none=False, only="name"),
+        fields.Pluck(PersonStrictSchema, "name", allow_none=False),
         allow_none=False,
         required=True
     )

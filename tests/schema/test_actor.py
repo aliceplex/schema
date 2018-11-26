@@ -1,7 +1,7 @@
 import pytest
 from marshmallow import ValidationError
 
-from plex_schema import Actor, ActorSchema, ActorStrictSchema
+from aliceplex.schema import Actor, ActorSchema, ActorStrictSchema
 
 
 def test_actor_schema_load(actor_schema: ActorSchema):

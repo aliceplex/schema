@@ -1,14 +1,14 @@
 from marshmallow import fields
 
-from plex_schema.model import Person
-from plex_schema.schema.base import DataClassSchema
+from aliceplex.schema.model import Person
+from aliceplex.schema.schema.base import DataClassSchema
 
 __all__ = ["PersonSchema", "PersonStrictSchema"]
 
 
 class PersonSchema(DataClassSchema):
     """
-    Schema for :class:`plex_schema.model.Person`
+    Schema for :class:`aliceplex.schema.model.Person`
     """
 
     name = fields.Str(allow_none=True)
@@ -21,7 +21,7 @@ class PersonSchema(DataClassSchema):
 
 class PersonStrictSchema(PersonSchema):
     """
-    Strict schema for :class:`plex_schema.model.Person`
+    Strict schema for :class:`aliceplex.schema.model.Person`
     """
 
     name = fields.Str(allow_none=False, required=True)

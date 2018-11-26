@@ -1,20 +1,15 @@
-"""
-This module provides schema object to convert between common Plex data object
-and dictionary.
-"""
-
 from marshmallow import fields
 from marshmallow.validate import Length
 
-from plex_schema.model import Artist
-from plex_schema.schema.base import DataClassSchema
+from aliceplex.schema.model import Artist
+from aliceplex.schema.schema.base import DataClassSchema
 
 __all__ = ["ArtistSchema", "ArtistStrictSchema"]
 
 
 class ArtistSchema(DataClassSchema):
     """
-    Schema for :class:`plex_schema.model.Artist`
+    Schema for :class:`aliceplex.schema.model.Artist`
     """
 
     summary = fields.Str(allow_none=True)
@@ -29,7 +24,7 @@ class ArtistSchema(DataClassSchema):
 
 class ArtistStrictSchema(ArtistSchema):
     """
-    Strict schema for :class:`plex_schema.model.Artist`
+    Strict schema for :class:`aliceplex.schema.model.Artist`
     """
 
     summary = fields.Str(allow_none=False, required=True)

@@ -1,7 +1,3 @@
-"""
-This module provides functions to format string.
-"""
-
 import re
 import unicodedata
 
@@ -27,6 +23,21 @@ def remove_trailing_space(string: str) -> str:
 
 
 def remove_leading_space(string: str) -> str:
+    """
+    Remove the leading space of a string at every line.
+
+    :param string: String to be processed
+    :type string: str
+    :return: Result string
+    :rtype: str
+
+    **Example:**
+
+    .. code-block:: python
+
+        string = " Hello \\nWorld!"
+        result = remove_trailing_space(string) # "Hello \\nWorld!"
+    """
     return re.sub(r"^[ \t]*", "", string, flags=re.MULTILINE)
 
 
@@ -185,8 +196,8 @@ def remove_single_linebreak(string: str) -> str:
 
     .. code-block:: python
 
-        string = "Hello\n\nWorld?\nTest"
-        result = replace_ending_space(string) # "Hello\n\nWorld?Test"
+        string = "Hello\\n\\nWorld?\\nTest"
+        result = replace_ending_space(string) # "Hello\\n\\nWorld?Test"
     """
     return re.sub(r"(?<!\n)\n(?!\n)", "", string)
 
