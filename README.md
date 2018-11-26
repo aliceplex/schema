@@ -12,7 +12,7 @@ This can be used to develop other Plex library.
 ## Install
 
 ```bash
-pip install -i aliceplex-schema
+pip install aliceplex-schema
 ```
 
 ## Documentation

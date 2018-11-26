@@ -9,7 +9,7 @@ Install
 
 .. code-block:: bash
 
-    pip install -i aliceplex-schema
+    pip install aliceplex-schema
 
 
 .. toctree::
