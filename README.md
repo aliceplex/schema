@@ -11,4 +11,4 @@ pip install -i aliceplex-schema
 
 ## Documentation
 
-See [documentation](https://github.com/aliceplex/schema).
+See [documentation](http://aliceplex-schema.readthedocs.io/).
