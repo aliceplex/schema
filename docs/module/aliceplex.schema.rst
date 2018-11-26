@@ -15,6 +15,5 @@ Submodules
 
    aliceplex.schema.format
    aliceplex.schema.model
-   aliceplex.schema.patch
    aliceplex.schema.verify
 
