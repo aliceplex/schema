@@ -5,7 +5,7 @@ with open("README.md", "r") as readme:
 
 setup(
     name="aliceplex-schema",
-    version="3.0.0b1",
+    version="3.0.0",
     author="Alice Plex",
     url="https://github.com/aliceplex/schema",
     description="Schema library for Plex",
