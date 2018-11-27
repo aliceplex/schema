@@ -31,6 +31,3 @@ script:
       pylint --version
       pylint aliceplex;
     fi
-cache:
-  directories:
-    - $HOME/.cache/pip
