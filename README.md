@@ -4,7 +4,8 @@
 [![License](https://img.shields.io/github/license/aliceplex/schema.svg)](https://github.com/aliceplex/schema/blob/master/LICENSE) 
 [![Documentation Status](https://readthedocs.org/projects/aliceplex-schema/badge/?version=latest)](https://aliceplex-schema.readthedocs.io/en/latest/) 
 [![Test](https://img.shields.io/travis/aliceplex/schema.svg)](https://travis-ci.org/aliceplex/schema) 
-[![Test Coverage](https://git.joshuaavalon.io/alice/plex-schema/badges/master/coverage.svg)](https://git.joshuaavalon.io/alice/plex-schema/pipelines)
+[![Coverage](https://img.shields.io/codeclimate/coverage/aliceplex/schema.svg)](https://codeclimate.com/github/aliceplex/schema)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/aliceplex/schema.svg)](https://codeclimate.com/github/aliceplex/schema)
 
 aliceplex-schema is a schema library for Plex. It provides basic Plex related model.
 This can be used to develop other Plex library.

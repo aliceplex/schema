@@ -3,9 +3,9 @@ language: python
 python: 3.7
 jobs:
   include:
-      - env: TEST_TYPE=pytest
-      - env: TEST_TYPE=flake8
-      - env: TEST_TYPE=pylint
+    - env: TEST_TYPE=pytest
+    - env: TEST_TYPE=flake8
+    - env: TEST_TYPE=pylint
 before_install:
   - deactivate
   - /opt/python/3.7.1/bin/python -m venv ~/venv
@@ -15,11 +15,18 @@ install:
   - if [[ $TEST_TYPE == 'pytest' ]]; then travis_retry pip install -U pytest>=4.0.1 pytest-cov>=2.6.0; fi
   - if [[ $TEST_TYPE == 'flake8' ]]; then travis_retry pip install -U flake8>=3.6.0; fi
   - if [[ $TEST_TYPE == 'pylint' ]]; then travis_retry pip install -U pylint>=2.1.1; fi
+before_script:
+  - |
+    if [[ $TEST_TYPE == 'pytest' ]]; then
+      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      chmod +x ./cc-test-reporter
+      ./cc-test-reporter before-build;
+    fi
 script:
   - |
     if [[ $TEST_TYPE == 'pytest' ]]; then
       pytest --version
-      pytest --cov=aliceplex tests;
+      pytest --cov aliceplex --cov-report xml --cov-report term tests;
     fi
   - |
     if [[ $TEST_TYPE == 'flake8' ]]; then
@@ -30,4 +37,9 @@ script:
     if [[ $TEST_TYPE == 'pylint' ]]; then
       pylint --version
       pylint aliceplex;
+    fi
+after_script:
+  - |
+    if [[ $TEST_TYPE == 'pytest' ]]; then
+      ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT;
     fi

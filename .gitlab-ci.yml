@@ -27,7 +27,7 @@ pytest:
     - pytest --version
 
   script:
-    - pytest --cov=aliceplex tests
+    - pytest --cov aliceplex tests
 
 flake8:
   image: python:3.7
