@@ -1,6 +1,5 @@
-import dataclasses
-from dataclasses import Field, asdict, is_dataclass
-from typing import Any, Dict, List
+from dataclasses import Field, asdict, fields, is_dataclass
+from typing import Any, Dict, List, Optional
 
 from marshmallow import Schema, post_load, pre_dump, pre_load
 
@@ -30,9 +29,7 @@ class DataClassSchema(Schema):
         return new_data
 
     def filter_data(self, data: Dict[str, Any]):
-        data_class = self.data_class
-        # noinspection PyDataclass
-        data_class_fields: List[Field] = dataclasses.fields(data_class)
+        data_class_fields = self._get_field()
         for field in data_class_fields:
             name = field.name
             if name not in data:
@@ -41,17 +38,36 @@ class DataClassSchema(Schema):
             origin = getattr(f_type, "__origin__", None)
             args = getattr(f_type, "__args__", ())
             if list in (f_type, origin):
-                if data[name] is None:
-                    # Convert None to empty list for List field
-                    data[name] = []
-                else:
-                    # Filter None and empty string in list
-                    data[name] = [value for value in data[name]
-                                  if value is not None and value != ""]
-            elif ((str in (f_type, origin) or str in args) and
-                  data[name] == ""):
+                data[name] = self._filter_list(data[name])
+            elif self._is_str(f_type, origin, args) and data[name] == "":
                 # Replace empty string with None
                 data[name] = None
+
+    @staticmethod
+    def _is_str(f_type, origin, args) -> bool:
+        return str in (f_type, origin) or str in args
+
+    @staticmethod
+    def _filter_list(data: Optional[list]) -> list:
+        if data is None:
+            # Convert None to empty list for List field
+            return []
+        # Filter None and empty string in list
+        return [value for value in data if value is not None and value != ""]
+
+    def _get_field(self) -> List[Field]:
+        """
+        Get fields of the dataclass
+
+        :return: Defined fields on dataclass
+        :rtype: List[Field]
+        :raises ValueError: if data_class is not a dataclass
+        """
+        data_class = self.data_class
+        if not is_dataclass(data_class):
+            raise ValueError("You should use dataclass for DataClassSchema")
+        # noinspection PyDataclass
+        return fields(data_class)
 
     @post_load
     def post_load(self, data) -> Any:
