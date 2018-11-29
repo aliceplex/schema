@@ -6,6 +6,7 @@
 [![Test](https://img.shields.io/travis/aliceplex/schema.svg)](https://travis-ci.org/aliceplex/schema) 
 [![Coverage](https://img.shields.io/codeclimate/coverage/aliceplex/schema.svg)](https://codeclimate.com/github/aliceplex/schema)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/aliceplex/schema.svg)](https://codeclimate.com/github/aliceplex/schema)
+[![Known Vulnerabilities](https://snyk.io/test/github/aliceplex/schema/badge.svg)](https://snyk.io/test/github/aliceplex/schema)
 
 aliceplex-schema is a schema library for Plex. It provides basic Plex related model.
 This can be used to develop other Plex library.
