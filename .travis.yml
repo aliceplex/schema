@@ -1,45 +1,41 @@
 dist: xenial
 language: python
 python: 3.7
+stages:
+  - test
 jobs:
   include:
-    - env: TEST_TYPE=pytest
-    - env: TEST_TYPE=flake8
-    - env: TEST_TYPE=pylint
-before_install:
-  - deactivate
-  - /opt/python/3.7.1/bin/python -m venv ~/venv
-  - source ~/venv/bin/activate
-install:
-  - pip install -r requirements.txt
-  - if [[ $TEST_TYPE == 'pytest' ]]; then travis_retry pip install -U pytest>=4.0.1 pytest-cov>=2.6.0; fi
-  - if [[ $TEST_TYPE == 'flake8' ]]; then travis_retry pip install -U flake8>=3.6.0; fi
-  - if [[ $TEST_TYPE == 'pylint' ]]; then travis_retry pip install -U pylint>=2.1.1; fi
-before_script:
-  - |
-    if [[ $TEST_TYPE == 'pytest' ]]; then
-      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-      chmod +x ./cc-test-reporter
-      ./cc-test-reporter before-build;
-    fi
-script:
-  - |
-    if [[ $TEST_TYPE == 'pytest' ]]; then
-      pytest --version
-      pytest --cov aliceplex --cov-report xml --cov-report term tests;
-    fi
-  - |
-    if [[ $TEST_TYPE == 'flake8' ]]; then
-      flake8 --version
-      flake8 aliceplex;
-    fi
-  - |
-    if [[ $TEST_TYPE == 'pylint' ]]; then
-      pylint --version
-      pylint aliceplex;
-    fi
-after_script:
-  - |
-    if [[ $TEST_TYPE == 'pytest' ]]; then
-      ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT;
-    fi
+    - stage: test
+      name: flake8
+      install:
+        - travis_retry pip install -r requirements.txt
+        - travis_retry pip install -U flake8
+      script:
+        - flake8 --version
+        - flake8 aliceplex
+    - stage: test
+      name: pylint
+      install:
+        - travis_retry pip install -r requirements.txt
+        - travis_retry pip install -U pylint
+      script:
+        - pylint --version
+        - pylint aliceplex
+    - stage: test
+      name: pytest
+      before_install:
+        - deactivate
+        - /opt/python/3.7.1/bin/python -m venv ~/venv
+        - source ~/venv/bin/activate
+      install:
+        - travis_retry pip install -r requirements.txt
+        - travis_retry pip install -U pytest pytest-cov
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
+      script:
+        - pytest --version
+        - pytest --cov aliceplex --cov-report xml --cov-report term tests
+      after_script:
+        - ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT
